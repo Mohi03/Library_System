@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Book {
     private String title;
     private String author;
@@ -19,10 +22,49 @@ class Book {
 
     // Setters
     public void setBorrowed(boolean borrowed) { isBorrowed = true; }
+
+    public abstract String getBookType();
 }
 
-import java.util.ArrayList;
-import java.util.List;
+public class RealBook extends Book {
+    private int numberOfPages;
+    private String location; // Shelf location in library
+
+    public RealBook(String title, String author, int ISBN, int numberOfPages, String location) {
+        super(title, author, ISBN);
+        this.numberOfPages = numberOfPages;
+        this.location = location;
+    }
+
+    // Getters  
+    public int getNumberOfPages() { return numberOfPages; }
+    public String getLocation() { return location; }
+
+    @Override
+    public String getBookType() {
+        return "Real Book";
+    }
+} 
+
+public class EBook extends Book {
+    private String fileFormat;
+    private double fileSize; // in MB
+
+    public EBook(String title, String author, int ISBN, String fileFormat, double fileSize) {
+        super(title, author, ISBN);
+        this.fileFormat = fileFormat;
+        this.fileSize = fileSize;
+    }
+
+    // Getters 
+    public String getFileFormat() { return fileFormat; }
+    public double getFileSize() { return fileSize; }
+
+    @Override
+    public String getBookType() {
+        return "E-Book";
+    }
+} 
 
 public class Borrower {
     private String name;
