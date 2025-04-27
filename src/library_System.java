@@ -2,7 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
 
-/*
+
+/**
   Library class manages a collection of books and borrowers.
   It provides functionality for adding books and borrowers,
   borrowing and returning books, and displaying library information.
@@ -11,10 +12,12 @@ public class Library {
     // Lists to store books and borrowers
     private List<Book> books;
     private List<Borrower> borrowers;
+    private List<BorrowingProcess> borrowingHistory;
 
     public Library() {
         books = new ArrayList<>();
         borrowers = new ArrayList<>();
+        borrowingHistory = new ArrayList<>();
     }
 
     // Adds a new book to the library
@@ -69,6 +72,9 @@ public class Library {
         }
 
         borrower.borrowBook(book);
+        // Create and store the borrowing process
+        BorrowingProcess process = new BorrowingProcess(book, borrower);
+        borrowingHistory.add(process);
         System.out.println("Book '" + book.getTitle() + "' borrowed by " + borrower.getName());
     }
 
@@ -82,7 +88,25 @@ public class Library {
         }
 
         borrower.returnBook(book);
+        // Find and update the borrowing process
+        for (BorrowingProcess process : borrowingHistory) {
+            if (process.getBorrowedBook() == book && process.getBorrower() == borrower && !process.isReturned()) {
+                process.recordReturn();
+                break;
+            }
+        }
         System.out.println("Book '" + book.getTitle() + "' returned by " + borrower.getName());
+    }
+
+    // Add a new method to display borrowing history
+    public void displayBorrowingHistory() {
+        System.out.println("\nBorrowing History:");
+        for (BorrowingProcess process : borrowingHistory) {
+            System.out.println("Book: " + process.getBorrowedBook().getTitle() +
+                             ", Borrower: " + process.getBorrower().getName() +
+                             ", Borrowed: " + process.getBorrowDate() +
+                             ", Returned: " + (process.isReturned() ? process.getReturnDate() : "Not returned yet"));
+        }
     }
 
     
@@ -110,7 +134,7 @@ public class Library {
                              ", Borrowed Books: " + borrower.getBorrowedBooks().size());
         }
     }
-} 
+}
 
 /**
   Abstract Book class that serves as the base class for all types of books.
