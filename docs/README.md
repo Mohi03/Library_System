@@ -13,6 +13,19 @@ A simple **Java** application to manage a library's collection of books, borrowe
 - **Display Borrowers**: List all borrowers and count of currently borrowed books.
 - **Borrowing History**: View complete history of borrow/return transactions with timestamps.
 
+---
+
+## Project Structure
+
+The project consists of the following classes:
+
+- **Library**: Manages books, borrowers, and handles the borrow/return operations.
+- **Book** (abstract): Represents a generic book. Can be extended for specific book types.
+- **RealBook**: Represents a physical book with specific attributes like page count and shelf location.
+- **EBook**: Represents an electronic book with file format and size.
+- **Borrower**: Represents users who borrow books and maintains their borrowed books list.
+- **BorrowingProcess**: Stores borrowing and return records with dates.
+- **library_System** (Main): Provides the user interface to interact with the system.
 
 ---
 
